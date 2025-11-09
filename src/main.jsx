@@ -14,6 +14,7 @@ import MyAcceptedTasks from './Pages/MyAcceptedTasks/MyAcceptedTasks.jsx';
 import AuthProvider from './Contexts/AuthProvider/AuthProvider.jsx';
 import Register from './Pages/Register/Register';
 import Login from './Pages/Login/Login';
+import JobsDetails from './Pages/JobsDetails/JobsDetails';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
       },
       {
         path: "alljobs",
-        Component: AllJobs
+        Component: AllJobs,
+        loader: () => fetch('http://localhost:3000/jobs')
       },
       {
         path: "addjob",
@@ -44,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         Component: Login
+      },
+      {
+        path: "jobDetails/:id",
+        Component: JobsDetails
       },
     ]
   },

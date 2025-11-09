@@ -16,9 +16,27 @@ const Register = () => {
     const handleGoogleSignIn = () => {
         signInWithGoogle()
         .then(result => {
-            setUser(result.user);
+            // setUser(result.user);
             console.log(result.user);
-            navigate('/');
+
+            const newUser = {
+                name: result.user.displayName,
+                email: result.user.email,
+                PhotoURL: result.user.photoURL
+            }
+
+            fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(newUser)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('data after user save', data);
+            })
+            // navigate('/');
         })
         .catch(error => {
             console.log(error);
