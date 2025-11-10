@@ -48,7 +48,7 @@ const Home = () => {
                                         <div className="badge text-[#00D390] bg-[#F1F5E8]">{job.status}</div>
 
                                     </div> */}
-                                    <NavLink to={`/jobdetails/${job._id}`} ><button className='btn btn-primary w-full mt-4'>View More</button></NavLink>
+                                    <NavLink to={`/jobdetails/${job._id}`} ><button className='btn btn-primary w-full mt-4'>View Details</button></NavLink>
 
                                 </div>
                             </div>

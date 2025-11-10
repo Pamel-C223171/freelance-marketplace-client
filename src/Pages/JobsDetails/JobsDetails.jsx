@@ -5,13 +5,13 @@ import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 
 const JobsDetails = () => {
     const data = useLoaderData();
-     const { user } = use(AuthContext);
+    const { user } = use(AuthContext);
     const { id } = useParams();
     const jobs = data.find(job => String(job._id) === id)
 
     const handleTryBtn = (e) => {
         e.preventDefault();
-        toast.success('Order Successful!', {
+        toast.success('Accepted!', {
             position: "top-center",
             autoClose: 2000,
             hideProgressBar: false,
@@ -38,27 +38,23 @@ const JobsDetails = () => {
                             alt="Shoes" />
                     </figure>
                 </div>
-                <div className='col-span-12 md:col-span-4 border-2 border-amber-400 mt-16'>
+                <div className='col-span-12 md:col-span-4 mt-18'>
 
-                    <div className='w-full'>
+                    <div className='w-full space-y-5'>
                         <div className='flex items-center gap-1'>
-                            <p className='text-base font-semibold'>Price: <span className='font-normal'>{data.price}</span></p>
+                            <p className='text-base font-semibold'>Posted By : <span className='font-normal'>{jobs.postedBy}</span></p>
 
                         </div>
                         <div className=''>
-                            <p className='text-base font-semibold'>Seller Name: <span className='font-normal'>{data.sellerName}</span></p>
+                            <p className='text-base font-semibold'>Posted By (Email) : <span className='font-normal'>{jobs.userEmail}</span></p>
 
                         </div>
                         <div className=''>
-                            <p className='text-base font-semibold'>Seller Email: <span className='font-normal'>{data.sellerEmail}</span></p>
+                            <p className='text-base font-semibold'>Accepted By : <span className='font-normal'>{jobs.acceptedBy}</span></p>
 
                         </div>
                         <div className=''>
-                            <p className='text-base font-semibold'>Ratings: <span className='font-normal'>{data.rating}</span></p>
-                        </div>
-                        <div className=''>
-                            <p className='text-base font-semibold'>Available Quantity: <span className='font-normal'>{data.availableQuantity}</span></p>
-
+                            <p className='text-base font-semibold'>Current Status : <span className='font-normal'>{jobs.status}</span></p>
                         </div>
                         <div className="">
                             <form onSubmit={handleTryBtn}>
@@ -67,7 +63,7 @@ const JobsDetails = () => {
                                     <input name='name' value={user.displayName} readOnly type="name" className="input" placeholder="Name" required />
                                     <label className="label font-semibold text-black">Email</label>
                                     <input name='email' type="email" value={user.email} readOnly className="input" placeholder="Email" required />
-                                    <button className="btn btn-neutral">Accept</button>
+                                    <button className="btn btn-primary mt-5">Accept</button>
                                 </fieldset>
                             </form>
                         </div>
@@ -78,8 +74,8 @@ const JobsDetails = () => {
             <div className='mt-10 border-t-2 border-gray-600  grid grid-cols-12'>
                 <div className='col-span-12 md:col-span-8 '>
                     <h3 className='text-xl font-semibold mt-5'>Description</h3>
-                <p className='mt-2 '>{jobs.summary}</p>
-                <Link to='/' className='btn mt-5 btn-neutral'>Back To Page</Link>
+                    <p className='mt-2 '>{jobs.summary}</p>
+                    <Link to='/' className='btn mt-5 btn-primary'>Back To Page</Link>
                 </div>
             </div>
             <ToastContainer
