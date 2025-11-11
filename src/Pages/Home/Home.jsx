@@ -5,7 +5,7 @@ import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 
 const Home = () => {
     const data = useLoaderData();
-    const jobs = data.slice(0,6)
+    const jobs = data;
     const { user } = use(AuthContext);
     // console.log(data);
     return (

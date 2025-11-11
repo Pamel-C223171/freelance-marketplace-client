@@ -60,9 +60,9 @@ const JobsDetails = () => {
                             <form onSubmit={handleTryBtn}>
                                 <fieldset className="fieldset">
                                     <label className="label font-semibold text-black">Name</label>
-                                    <input name='name' value={user.displayName} readOnly type="name" className="input" placeholder="Name" required />
+                                    <input name='name' defaultValue={user.displayName} readOnly type="name" className="input" placeholder="Name" required />
                                     <label className="label font-semibold text-black">Email</label>
-                                    <input name='email' type="email" value={user.email} readOnly className="input" placeholder="Email" required />
+                                    <input name='email' type="email" defaultValue={user.email} readOnly className="input" placeholder="Email" required />
                                     <button className="btn btn-primary mt-5">Accept</button>
                                 </fieldset>
                             </form>
