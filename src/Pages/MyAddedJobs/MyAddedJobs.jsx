@@ -1,7 +1,8 @@
 import React, { use } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
+import { Bounce, toast, ToastContainer } from 'react-toastify';
 
 const MyAddedJobs = () => {
 
@@ -41,6 +42,80 @@ const MyAddedJobs = () => {
 
             }
         });
+    }
+
+    // const handleUpdateBtn = () => {
+
+    //     toast.success('Update to the job Successful!', {
+    //         position: "top-center",
+    //         autoClose: 2000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "light",
+    //         transition: Bounce,
+    //     });
+
+    // }
+
+    const handleUpdateJob = (e, id) => {
+        e.preventDefault();
+        const form = e.target;
+        const title = form.title.value;
+        const category = form.category.value;
+        const photo = form.photo.value;
+        const summary = form.summary.value;
+        // console.log({ title, category, photo, summary });
+
+        const updateJob = {
+            title: title,
+            category: category,
+            summary: summary,
+            coverImage: photo,
+        }
+
+        fetch(`http://localhost:3000/jobs/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateJob)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log('after added job', data);
+                if (data.modifiedCount > 0) {
+                    toast.success('Update to the job Successful!', {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
+                }
+                else {
+                    toast.success('No changes!', {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
+                }
+            })
+
+
+
     }
 
 
@@ -90,7 +165,67 @@ const MyAddedJobs = () => {
                                         </td>
                                         <td><button className="btn btn-ghost btn-xs bg-green-500 mr-2">{job.status}</button></td>
                                         <th>
-                                            <button className="btn btn-primary btn-xs mr-2">Update</button>
+                                            {/* Open the modal using document.getElementById('ID').showModal() method */}
+                                            <button className="btn btn-ghost btn-xs bg-blue-500 mr-2" onClick={() => document.getElementById('my_modal_5').showModal()}>Update</button>
+                                            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                                                <div className="modal-box">
+                                                    <div>
+                                                        <div className="min-h-screen flex items-center justify-center">
+
+                                                            <div className="card bg-base-100 w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
+                                                                <h1 className="text-4xl font-bold text-center mb-6">Update To The Job</h1>
+                                                                <div className="">
+                                                                    <form onSubmit={(e) => handleUpdateJob(e, job._id)}>
+                                                                        <fieldset className="fieldset space-y-2">
+
+                                                                            <label className="label">Job Title</label>
+                                                                            <input name='title' type="text" className="input input-bordered w-full" defaultValue={job.title} required />
+
+
+                                                                            <label className="label">Category</label>
+                                                                            <select name='category' defaultValue={job.category} className="select appearance-none w-full">
+                                                                                <option disabled={true}>Select Job Category</option>
+                                                                                <option>Web Development</option>
+                                                                                <option>Mobile App Development</option>
+                                                                                <option>Graphic Design</option>
+                                                                                <option>Digital Marketing</option>
+                                                                                <option>Content Writing</option>
+                                                                            </select>
+
+                                                                            <label className="label">Cover Image</label>
+                                                                            <input name='photo' type="text" className="input input-bordered w-full" placeholder="Enter Job Image URL" required />
+
+
+
+                                                                            <label className="label hidden">Posted Date</label>
+                                                                            <input name='date' type='text' defaultValue={new Date().toISOString()} className="input hidden input-bordered w-full" required />
+
+                                                                            <div className='w-full mx-auto'>
+                                                                                <label className="label mb-2">Summary</label>
+                                                                                <textarea defaultValue={job.summary} name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
+                                                                            </div>
+
+                                                                            <button type="submit" className="btn btn-primary w-full mt-4">Update</button>
+
+                                                                        </fieldset>
+                                                                    </form>
+
+                                                                    {/* <Link to='/myaddedjobs'><button className='btn btn-primary w-full mt-5'>My Added Job</button></Link> */}
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div className="modal-action">
+                                                        <form method="dialog">
+                                                            {/* if there is a button in form, it will close the modal */}
+                                                            <button className="btn">Close</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </dialog>
                                             <button onClick={() => handleDeleteBtn(job._id)} className="btn btn-ghost btn-xs bg-red-500 mt-2 md:mr-2 md:mt-0">Delete</button>
                                         </th>
                                     </tr>
@@ -99,30 +234,22 @@ const MyAddedJobs = () => {
                                 </tbody>)}
 
                         </table>
+
+                        <ToastContainer
+                            position="bottom-center"
+                            autoClose={2000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                            transition={Bounce}
+                        />
+
                     </div>)
-
-
-                    // myJobs.length > 0 ? (
-                    //     <div>
-                    //         <ul className="list bg-base-100 rounded-box shadow-md">
-
-                    //             {
-                    //                 myJobs.map((job, index) => <li className="list-row">
-                    //                 <div className="text-4xl font-thin opacity-30 tabular-nums">{index + 1}</div>
-                    //                 <div><img className="size-10 rounded-box" src={job.coverImage} /></div>
-                    //                 <div className="list-col-grow">
-                    //                     <div>{job.title}</div>
-                    //                     <div className="text-xs uppercase font-semibold opacity-60">{job.category}</div>
-                    //                 </div>
-                    //                 <button className="btn btn-square btn-ghost">
-                    //                     <svg className="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
-                    //                 </button>
-                    //             </li>)
-                    //             }
-
-                    //         </ul>
-                    //     </div>
-                    // ) 
                     :
                     (
                         <div>
