@@ -14,14 +14,6 @@ const PrivateRoutes = ({ children }) => {
 
 
 
-
-    // if (!user) return <Navigate to="/login" />;
-
-
-
-
-
-
     if (user && user.email) {
         return children;
     }

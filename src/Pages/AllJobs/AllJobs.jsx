@@ -42,10 +42,11 @@ const AllJobs = () => {
                                                    </div>
                                                    <div className="card-actions justify-start items-center mt-3">
                
-                                                       <div className=" text-black  "><img className="rounded-full  h-[25px] w-[25px]"
+                                                       {/* <div className=" text-black  "><img className="rounded-full  h-[25px] w-[25px]"
                                                            alt="User Image"
-                                                           src={`${user?.photoURL || "https://th.bing.com/th/id/R.2fa57439a24f242faaf2333fe5e9e295?rik=ERIOJB6KU7TNYw&pid=ImgRaw&r=0"}`} /></div>
-                                                       <div className="font-semibold">{job.postedBy}</div>
+                                                           src={`${user?.photoURL || "https://th.bing.com/th/id/R.2fa57439a24f242faaf2333fe5e9e295?rik=ERIOJB6KU7TNYw&pid=ImgRaw&r=0"}`} /></div> */}
+
+                                                       <div className="font-semibold">🙎‍♂️ {job.postedBy}</div>
                
                                                    </div>
                                                    {/* <div className="card-actions justify-between mt-4">

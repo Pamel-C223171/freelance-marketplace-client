@@ -2,6 +2,7 @@ import React, { use, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
+import  axios  from 'axios';
 
 const JobsDetails = () => {
     const job = useLoaderData();
@@ -23,15 +24,9 @@ const JobsDetails = () => {
                 status: "Accepted"
             };
 
-            const res = await fetch(`http://localhost:3000/jobs/${jobDetails._id}`, {
-                method: "PATCH",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify(updateJob)
-            })
+            const res = await axios.patch(`http://localhost:3000/jobs/${jobDetails._id}`, updateJob)
 
-            if (res.ok) {
+            if (res.status === 200) {
                 toast.success('Accepted!', {
                     position: "top-center",
                     autoClose: 2000,
@@ -77,7 +72,7 @@ const JobsDetails = () => {
                             alt="Shoes" />
                     </figure>
                 </div>
-                <div className='col-span-12 md:col-span-4 mt-18'>
+                <div className='col-span-12 md:col-span-4 md:mt-18'>
 
                     <div className='w-full space-y-5'>
                         <div className='flex items-center gap-1'>

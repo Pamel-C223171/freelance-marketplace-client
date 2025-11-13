@@ -2,6 +2,7 @@ import React, { use } from 'react';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import { Link } from 'react-router-dom';
+import axios  from 'axios';
 
 const AddJob = () => {
 
@@ -24,7 +25,7 @@ const AddJob = () => {
 
     }
 
-    const handleAddJob = (e) => {
+    const handleAddJob = async (e) => {
         e.preventDefault();
         const form = e.target;
         const title = form.title.value;
@@ -48,19 +49,26 @@ const AddJob = () => {
             status: "open"
         }
 
-        fetch('http://localhost:3000/jobs', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(newJob)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log('after added job', data);
-        })
+        try{
+             await axios.post('http://localhost:3000/jobs', newJob);
+             toast.success('Add to the job Successful!', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+        });
+        
+        form.reset();
 
-
+        }
+        catch(error){
+            console.log(error);
+        }
 
     }
 

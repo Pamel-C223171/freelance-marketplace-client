@@ -2,64 +2,57 @@ import React, { use, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { AuthContext } from './../../Contexts/AuthContext/AuthContext';
+import  axios  from 'axios';
 
 const Register = () => {
     const [nameError, setNameError] = useState("");
     const [error, setError] = useState("")
-    // const [photoError, setPhotoError] = useState("");
-    // const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const { createUser, setUser, signInWithGoogle } = use(AuthContext);
     const navigate = useNavigate();
 
-    const handleGoogleSignIn = () => {
-        signInWithGoogle()
-            .then(result => {
-                // setUser(result.user);
-                console.log(result.user);
-                const googleUser = result.user;
+    const handleGoogleSignIn = async () => {
 
-                const newUser = {
-                    name: result.user.displayName,
-                    email: result.user.email,
-                    PhotoURL: result.user.photoURL
-                }
+        try {
+            const result = await signInWithGoogle();
+            const googleUser = result.user;
 
-                fetch(`http://localhost:3000/users?email=${googleUser.email}`)
-                    .then(res => res.json())
-                    .then(existingUsers => {
-                        if (existingUsers.length === 0) {
-                            fetch(`http://localhost:3000/users?email=${googleUser.email}`, {
-                                method: 'POST',
-                                headers: {
-                                    'content-type': 'application/json'
-                                },
-                                body: JSON.stringify(newUser)
-                            })
-                                .then(res => res.json())
-                                .then(data => console.log('data after user save', data));
-                        }
-                        setUser(googleUser);
-                        toast.success('Registration Successfull!', {
-                            position: "top-center",
-                            autoClose: 2000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                            transition: Bounce,
-                        });
-                        navigate('/');
-                    });
-            })
+            const newUser = {
+                name: result.user.displayName,
+                email: result.user.email,
+                PhotoURL: result.user.photoURL
+            }
 
-            .catch(error => console.log(error))
+            const existingUsers = await axios.get(`http://localhost:3000/users?email=${googleUser.email}`);
+
+            if (existingUsers.data.length === 0) {
+                await axios.post('http://localhost:3000/users', newUser)
+            }
+
+            setUser(googleUser);
+            toast.success('Registration Successfull!', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+
+            navigate('/');
+        }
+        catch (error) {
+            console.log(error);
+            setError(error.message);
+        }
+
     }
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
@@ -73,58 +66,45 @@ const Register = () => {
         else {
             setNameError("");
         }
+
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/;
         if (!passwordPattern.test(password)) {
             setPasswordError("Password must be at least 6 character and include upper, lower case and one special character");
             return;
         }
-        // console.log({ name, email, photo, password });
-        createUser(email, password)
-            .then(result => {
-                const user = result.user;
-                // console.log(user)
 
-                fetch(`http://localhost:3000/users?email=${email}`)
-                    .then(res => res.json())
-                    .then(existingUsers => {
-                        if (existingUsers.length === 0) {
-                            const newUser = {
-                                name: name,
-                                email: email,
-                                phootoURL: photo
-                            }
-                            fetch('http://localhost:3000/users', {
-                                method: 'POST',
-                                headers: {
-                                    'content-type': 'application/json'
-                                },
-                                body: JSON.stringify(newUser)
-                            })
-                                .then(res => res.json())
-                                .then(data => console.log('data after user save', data));
-                        }
-                        toast.success('Registration Successfull!', {
-                            position: "top-center",
-                            autoClose: 2000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                            transition: Bounce,
-                        });
-                        setUser({ ...user, displayName: name, photoURL: photo });
-                        navigate('/');
-                    });
-            })
-            .catch((error) => {
-                console.log(error.message);
-                setError(error.code);
-            })
+        try {
+            const result = await createUser(email, password);
+            const user = result.user;
 
+            const existingUsers = await axios.get(`http://localhost:3000/users?email=${email}`);
 
+            if (existingUsers.data.length === 0) {
+                const newUser = { name, email, photoURL: photo };
+                await axios.post('http://localhost:3000/users', newUser);
+            }
+            toast.success('Registration Successfull!', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+
+            setUser({ ...user, displayName: name, photoURL: photo });
+            navigate('/');
+        }
+
+        catch (error) {
+            console.log(error);
+            setError(error.message);
+        }
     }
+
     return (
         <div>
             <div className="bg-base-200 min-h-screen flex items-center justify-center mt-10">

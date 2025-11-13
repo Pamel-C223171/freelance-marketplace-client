@@ -3,6 +3,7 @@ import { NavLink, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
+import axios  from 'axios';
 
 const MyAcceptedTasks = () => {
     const jobs = useLoaderData();
@@ -24,11 +25,9 @@ const MyAcceptedTasks = () => {
 
         if (confirm.isConfirmed) {
             try {
-                const res = await fetch(`http://localhost:3000/jobs/${id}`, {
-                    method: 'DELETE',
-                });
+                const res = await axios.delete(`http://localhost:3000/jobs/${id}`);
 
-                if (res.ok) {
+                if (res.data.deletedCount) {
                     setMyAcceptJobs(prev => prev.filter(job => job._id !== id));
                     toast.success(type === 'done' ? 'mark as done?' : 'cancel this job?', {
                         position: "top-center",

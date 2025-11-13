@@ -15,20 +15,7 @@ const Login = () => {
         signInWithGoogle()
          .then(result => {
                 const user = result.user;
-                setUser(user)
-                // fetch('http://localhost:3000/users', {
-                //     method: 'POST',
-                //     headers:{
-                //         'content-type': 'application/json'
-                //     },
-                //     body: JSON.stringify({
-                //         name: user.displayName,
-                //         email: user.email,
-                //         photoURL: user.photoURL,
-                //     })
-                //     .then(res => res.json)
-                //     .then(data => console.log(data))
-                // })
+                setUser(user);
                 toast.success('Login Successful!', {
                     position: "top-center",
                     autoClose: 2000,
@@ -40,12 +27,10 @@ const Login = () => {
                     theme: "light",
                     transition: Bounce,
                 });
-                // toast.success("LogIn Successful");
-                // alert("login Success")
+                
 
                 navigate(`${location.state ? location.state : "/"}`);
-                // navigate(location.state?.from || "/");
-                // navigate(location.state?.from?.pathname || "/");
+
 
 
             })
@@ -76,20 +61,7 @@ const Login = () => {
         signInUser(email, password)
             .then(result => {
                 const user = result.user;
-                 setUser(user)
-                // fetch('http://localhost:3000/users', {
-                //     method: 'POST',
-                //     headers:{
-                //         'content-type': 'application/json'
-                //     },
-                //     body: JSON.stringify({
-                //         name: user.displayName,
-                //         email: user.email,
-                //         photoURL: user.photoURL,
-                //     })
-                //     .then(res => res.json)
-                //     .then(data => console.log(data))
-                // })
+                 setUser(user);
                 toast.success('Login Successful!', {
                     position: "top-center",
                     autoClose: 2000,
@@ -101,8 +73,6 @@ const Login = () => {
                     theme: "light",
                     transition: Bounce,
                 });
-                // toast.success("LogIn Successful");
-                // alert("login Success")
 
                 navigate(`${location.state ? location.state : "/"}`);
                 // navigate(location.state?.from || "/");
