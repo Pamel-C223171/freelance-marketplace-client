@@ -1,18 +1,55 @@
 import React, { use } from 'react';
-import { NavLink, useLoaderData } from 'react-router-dom';
+import { Link, NavLink, useLoaderData, useNavigate } from 'react-router-dom';
 // import heartimg from '../../assets/heart.png'
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
-// import bannerimg from '../../assets/freelancebanner.jpg'
+import bannerimg from '../../assets/freelancebanner.jpg'
+
 
 const Home = () => {
     const data = useLoaderData();
     const jobs = data;
+    const categories = [...new Set(jobs.map(job => job.category))];
+    // console.log(categories)
     const { user } = use(AuthContext);
+    const navigate = useNavigate();
+
+
+    const handleDetailsBtn = (id) =>{
+         if(!user){
+            navigate('/login');
+    }
+    else{
+        navigate(`/jobdetails/${id}`);
+    }
+    } 
+
+    const handleCreateJob = () =>{
+         if(!user){
+            navigate('/login');
+    }
+    else{
+        navigate(`/addjob`);
+    }
+    } 
+   
     // console.log(data);
     return (
         <div className='my-14'>
             {/* banner section */}
-            
+            <div className=' bg-gradient-to-r from-[#330033] via-[#992699] to-[#330033] '>
+                <div className="md:flex md:justify-between px-8 md:items-center mt-12 gap-8">
+
+                    <div>
+
+                        <h1 className="text-[#363958] text-5xl font-bold text-black"><span className=" text-[#FABE4C] text-5xl bebas">Reliable Marketplace </span><br />for Local Jobs </h1>
+                        <p className="text-[#ffffff] mt-3"> Discover the perfect job or hire talented people easily. Join our
+                            platform today!</p>
+                        <button onClick={handleCreateJob} className="mt-5 btn btn-primary hover:bg-black">Create a Job</button>
+                    </div>
+
+                    <img className='w-1/2 h-[500px] py-8 rounded-full' src={bannerimg} alt="" />
+                </div>
+            </div>
 
 
 
@@ -50,7 +87,8 @@ const Home = () => {
                                         <div className="badge text-[#00D390] bg-[#F1F5E8]">{job.status}</div>
 
                                     </div> */}
-                                    <NavLink to={`/jobdetails/${job._id}`} ><button className='btn btn-primary w-full mt-4'>View Details</button></NavLink>
+                                    {/* <NavLink to={`/jobdetails/${job._id}`} ><button onClick={handleDetailsBtn} className='btn btn-primary hover:bg-black w-full mt-4'>View Details</button></NavLink> */}
+                                    <button onClick={() => handleDetailsBtn(job._id)} className='btn btn-primary hover:bg-black w-full mt-4'>View Details</button>
 
                                 </div>
                             </div>
@@ -59,8 +97,23 @@ const Home = () => {
                     }
                 </div>
                 <div className=' mt-10 flex justify-center'>
-                    <NavLink to='/alljobs'><button className='btn btn-primary'>View All Jobs</button></NavLink>
+                    <NavLink to='/alljobs'><button className='btn btn-primary hover:bg-black'>View All Jobs</button></NavLink>
                 </div>
+            </div>
+
+            <div className='w-11/12 mx-auto mt-14'>
+                <h2 className='font-bold text-3xl'>Top Categories</h2>
+                <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mt-8'>
+                    {
+                        categories.map((cat, index) => (
+                            <div key={index} className='flex flex-col items-center p-4 bg-white shadow-lg rounded-xl hover:scale-105 transition-transform'>
+                                <p className='font-semibold text-center'>{cat}</p>
+                            </div>
+                        ))
+                    }
+
+                </div>
+
             </div>
 
         </div>

@@ -1,5 +1,5 @@
 import React, { use } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, NavLink, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
@@ -166,7 +166,7 @@ const MyAddedJobs = () => {
                                         <td><button className="btn btn-ghost btn-xs bg-green-500 mr-2">{job.status}</button></td>
                                         <th>
                                             {/* Open the modal using document.getElementById('ID').showModal() method */}
-                                            <button className="btn btn-ghost btn-xs bg-blue-500 mr-2" onClick={() => document.getElementById('my_modal_5').showModal()}>Update</button>
+                                            <button className="btn btn-ghost btn-xs bg-blue-500 hover:bg- hover:text-white hover:bg-black mr-2" onClick={() => document.getElementById('my_modal_5').showModal()}>Update</button>
                                             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                                                 <div className="modal-box">
                                                     <div>
@@ -205,12 +205,12 @@ const MyAddedJobs = () => {
                                                                                 <textarea defaultValue={job.summary} name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
                                                                             </div>
 
-                                                                            <button type="submit" className="btn btn-primary w-full mt-4">Update</button>
+                                                                            <button type="submit" className="btn btn-primary hover:bg-black hover:text-white w-full mt-4">Update</button>
 
                                                                         </fieldset>
                                                                     </form>
 
-                                                                    {/* <Link to='/myaddedjobs'><button className='btn btn-primary w-full mt-5'>My Added Job</button></Link> */}
+                                                                   
 
                                                                 </div>
                                                             </div>
@@ -221,12 +221,12 @@ const MyAddedJobs = () => {
                                                     <div className="modal-action">
                                                         <form method="dialog">
                                                             {/* if there is a button in form, it will close the modal */}
-                                                            <button className="btn">Close</button>
+                                                            <button className="btn btn-primary hover:bg-black hover:text-white">Close</button>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </dialog>
-                                            <button onClick={() => handleDeleteBtn(job._id)} className="btn btn-ghost btn-xs bg-red-500 mt-2 md:mr-2 md:mt-0">Delete</button>
+                                            <button onClick={() => handleDeleteBtn(job._id)} className="btn btn-ghost btn-xs bg-red-500 mt-2 md:mr-2 hover:bg-black hover:text-white md:mt-0">Delete</button>
                                         </th>
                                     </tr>
 
@@ -253,7 +253,10 @@ const MyAddedJobs = () => {
                     :
                     (
                         <div>
-                            <p>You haven't added any jobs yet.</p>
+                            <p className='text-center font-semibold'>You haven't added any jobs yet.</p>
+                            <div className=' mt-10 flex justify-center'>
+                <NavLink to='/'><button className='btn btn-primary hover:bg-black'>⬅ Back to Home</button></NavLink>
+            </div>
                         </div>
                     )
                 }

@@ -10,37 +10,53 @@ const Register = () => {
     // const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const { createUser, setUser, updateUser, signInWithGoogle } = use(AuthContext);
+    const { createUser, setUser, signInWithGoogle } = use(AuthContext);
     const navigate = useNavigate();
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
-        .then(result => {
-            // setUser(result.user);
-            console.log(result.user);
+            .then(result => {
+                // setUser(result.user);
+                console.log(result.user);
+                const googleUser = result.user;
 
-            const newUser = {
-                name: result.user.displayName,
-                email: result.user.email,
-                PhotoURL: result.user.photoURL
-            }
+                const newUser = {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    PhotoURL: result.user.photoURL
+                }
 
-            fetch('http://localhost:3000/users', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(newUser)
+                fetch(`http://localhost:3000/users?email=${googleUser.email}`)
+                    .then(res => res.json())
+                    .then(existingUsers => {
+                        if (existingUsers.length === 0) {
+                            fetch(`http://localhost:3000/users?email=${googleUser.email}`, {
+                                method: 'POST',
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify(newUser)
+                            })
+                                .then(res => res.json())
+                                .then(data => console.log('data after user save', data));
+                        }
+                        setUser(googleUser);
+                        toast.success('Registration Successfull!', {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            transition: Bounce,
+                        });
+                        navigate('/');
+                    });
             })
-            .then(res => res.json())
-            .then(data => {
-                console.log('data after user save', data);
-            })
-            // navigate('/');
-        })
-        .catch(error => {
-            console.log(error);
-        } )
+
+            .catch(error => console.log(error))
     }
 
     const handleRegister = (e) => {
@@ -67,30 +83,40 @@ const Register = () => {
             .then(result => {
                 const user = result.user;
                 // console.log(user)
-            
-                toast.success('Registration Successful!', {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                });
 
-                updateUser({ displayName: name, photoURL: photo })
-                    .then(() => {
-                        setUser({ ...user, displayName: name, photoURL: photo })
-                       
+                fetch(`http://localhost:3000/users?email=${email}`)
+                    .then(res => res.json())
+                    .then(existingUsers => {
+                        if (existingUsers.length === 0) {
+                            const newUser = {
+                                name: name,
+                                email: email,
+                                phootoURL: photo
+                            }
+                            fetch('http://localhost:3000/users', {
+                                method: 'POST',
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify(newUser)
+                            })
+                                .then(res => res.json())
+                                .then(data => console.log('data after user save', data));
+                        }
+                        toast.success('Registration Successfull!', {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            transition: Bounce,
+                        });
+                        setUser({ ...user, displayName: name, photoURL: photo });
                         navigate('/');
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        setError(error.code)
-
-                    })
+                    });
             })
             .catch((error) => {
                 console.log(error.message);
@@ -128,14 +154,14 @@ const Register = () => {
                                 {
                                     passwordError && <p className='text-red-600 text-xs'>{passwordError}</p>
                                 }
-                                <button type="submit" className="btn btn-neutral w-full mt-4">Register</button>
+                                <button type="submit" className="btn btn-primary hover:bg-black w-full mt-4">Register</button>
                                 <p className="font-semibold text-center pt-5">
                                     Already Have An Account ?{" "}
                                     <Link className="text-secondary" to="/login">
                                         LogIn
                                     </Link>
                                 </p>
-                                <button type='button' onClick={handleGoogleSignIn} className='btn btn-neutral w-1/2 mx-auto mt-4'>Sign Up with Google</button>
+                                <button type='button' onClick={handleGoogleSignIn} className='btn btn-primary hover:bg-black w-1/2 mx-auto mt-4'>Sign Up with Google</button>
                             </fieldset>
                         </form>
                     </div>
@@ -143,18 +169,18 @@ const Register = () => {
 
             </div>
             <ToastContainer
-        position="bottom-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-        />
+                position="bottom-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
         </div>
     );
 };

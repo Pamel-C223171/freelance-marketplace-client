@@ -94,8 +94,8 @@ const MyAcceptedTasks = () => {
 
                                         </div>
                                         <div className='flex items-center justify-between mt-5'>
-                                            <button onClick={() => handleDelete(job._id, 'done')} className='btn btn-primary'>Done</button>
-                                            <button onClick={() => handleDelete(job._id, 'cancel')} className='btn btn-primary'>Cancel</button>
+                                            <button onClick={() => handleDelete(job._id, 'done')} className='btn btn-primary hover:bg-black'>✅ Done</button>
+                                            <button onClick={() => handleDelete(job._id, 'cancel')} className='btn btn-primary hover:bg-black'>❌ Cancel</button>
                                         </div>
 
                                     </div>
@@ -109,7 +109,7 @@ const MyAcceptedTasks = () => {
                 </div>)
             }
             <div className=' mt-10 flex justify-center'>
-                <NavLink to='/'><button className='btn btn-primary'>Back to Home</button></NavLink>
+                <NavLink to='/'><button className='btn btn-primary hover:bg-black'>⬅ Back to Home</button></NavLink>
             </div>
             <ToastContainer
                             position="bottom-center"

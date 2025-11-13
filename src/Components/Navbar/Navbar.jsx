@@ -82,7 +82,7 @@ const Navbar = () => {
                 </div>
 
                 {
-                    user ? <NavLink onClick={handleLogout} to={'/login'}><button className="btn btn-primary mr-2">LogOut</button></NavLink> : <NavLink to={'/login'}><button className="btn btn-primary">LogIn</button></NavLink>
+                    user ? <NavLink onClick={handleLogout} to={'/login'}><button className="btn btn-primary hover:bg-black mr-2">LogOut</button></NavLink> : <NavLink to={'/login'}><button className="btn btn-primary hover:bg-black">LogIn</button></NavLink>
                 }
 
                 <label className="flex cursor-pointer gap-2">

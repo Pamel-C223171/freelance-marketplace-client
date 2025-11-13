@@ -104,12 +104,12 @@ const AddJob = () => {
                                     <textarea name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
                                 </div>
 
-                                <button type="submit" onClick={handleAddBtn} className="btn btn-primary w-full mt-4">Add </button>
+                                <button type="submit" onClick={handleAddBtn} className="btn btn-primary hover:bg-black w-full mt-4">Add </button>
 
                             </fieldset>
                         </form>
 
-                        <Link to='/myaddedjobs'><button className='btn btn-primary w-full mt-5'>My Added Job</button></Link>
+                        <Link to='/myaddedjobs'><button className='btn btn-primary hover:bg-black w-full mt-5'>My Added Job</button></Link>
 
                     </div>
                 </div>

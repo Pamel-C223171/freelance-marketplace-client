@@ -1,5 +1,5 @@
 import React, { use } from 'react';
-import { NavLink, useLoaderData } from 'react-router-dom';
+import { NavLink, useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 
 const AllJobs = () => {
@@ -7,6 +7,17 @@ const AllJobs = () => {
     const { user } = use(AuthContext);
     const jobs = data;
     // console.log(data);
+    const navigate = useNavigate();
+
+     const handleDetailsBtn = (id) =>{
+         if(!user){
+            navigate('/login');
+    }
+    else{
+        navigate(`/jobDetails/${id}`);
+    }
+    } 
+
     return (
         <div className='my-14'>
 
@@ -43,8 +54,7 @@ const AllJobs = () => {
                                                        <div className="badge text-[#00D390] bg-[#F1F5E8]">{job.status}</div>
                
                                                    </div> */}
-                                                   <NavLink to={`/jobdetails/${job._id}`} ><button className='btn btn-primary w-full mt-4'>View Details</button></NavLink>
-               
+                                                    <button onClick={() => handleDetailsBtn(job._id)} className='btn btn-primary hover:bg-black w-full mt-4'>View Details</button>
                                                </div>
                                            </div>
                
