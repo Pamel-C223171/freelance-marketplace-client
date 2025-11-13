@@ -2,6 +2,7 @@ import React, { use } from 'react';
 import { NavLink, useLoaderData } from 'react-router-dom';
 // import heartimg from '../../assets/heart.png'
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
+// import bannerimg from '../../assets/freelancebanner.jpg'
 
 const Home = () => {
     const data = useLoaderData();
@@ -11,9 +12,10 @@ const Home = () => {
     return (
         <div className='my-14'>
             {/* banner section */}
-            <div className='w-full h-[200px] bg-[#2600ff]'>
-                <h2 className='text-center text-3xl font-bold text-[#ffffff]'>Home Pages</h2>
-            </div>
+            
+
+
+
 
             {/* latest Jobs */}
             <div className='mt-14 w-11/12 mx-auto'>

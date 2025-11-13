@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
@@ -9,28 +9,67 @@ const JobsDetails = () => {
     const { id } = useParams();
     const jobs = data.find(job => String(job._id) === id)
 
-    const handleTryBtn = (e) => {
+    const [job, setJob] = useState(jobs);
+
+    const handleAccept = async (e) => {
         e.preventDefault();
-        toast.success('Accepted!', {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-        });
+        if (jobs.userEmail === user.email) {
+            toast.warn("You cannot accept your job");
+            return;
+        }
+        try {
+            const updateJob = {
+                acceptedBy: user.email,
+                status: "Accepted"
+            };
+
+            const res = await fetch(`http://localhost:3000/jobs/${jobs._id}`, {
+                method: "PATCH",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(updateJob)
+            })
+
+            if (res.ok) {
+                toast.success('Accepted!', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+
+                setJob(prev => ({
+                    ...prev,
+                    acceptedBy: user.email,
+                    status: "Accepted"
+                }))
+
+
+            }
+
+        }
+        catch (error) {
+            console.log(error);
+            toast.error("something went wrong!")
+        }
+
     }
+
+    const isDisabled = jobs.status === "Accepted" || jobs.acceptedBy || jobs.userEmail === user.email;
 
     return (
         <div className='w-11/12 md:w-2/3 py-14  mx-auto '>
             <div className="grid grid-cols-12 gap-8 ">
                 <div className='col-span-12 md:col-span-8'>
                     <div className='border-b-2 border-gray-300'>
-                        <p className='text-xs mb-2'>{jobs.category}</p>
-                        <p className=" text-sm mb-3"><span className='text-3xl font-bold'>{jobs.title}</span></p>
+                        <p className='text-xs mb-2'>{job.category}</p>
+                        <p className=" text-sm mb-3"><span className='text-3xl font-bold'>{job.title}</span></p>
                     </div>
                     <figure className=' overflow-hidden mt-5'>
                         <img className='mb-3 w-full '
@@ -57,13 +96,13 @@ const JobsDetails = () => {
                             <p className='text-base font-semibold'>Current Status : <span className='font-normal'>{jobs.status}</span></p>
                         </div>
                         <div className="">
-                            <form onSubmit={handleTryBtn}>
+                            <form onSubmit={handleAccept}>
                                 <fieldset className="fieldset">
                                     <label className="label font-semibold text-black">Name</label>
                                     <input name='name' defaultValue={user.displayName} readOnly type="name" className="input" placeholder="Name" required />
                                     <label className="label font-semibold text-black">Email</label>
                                     <input name='email' type="email" defaultValue={user.email} readOnly className="input" placeholder="Email" required />
-                                    <button className="btn btn-primary mt-5">Accept</button>
+                                    <button disabled={isDisabled} className={`btn mt-5 ${isDisabled ? 'btn-disabled' : 'btn-primary'}`}>{jobs.status === "Accepted" ? "Already Accepted" : "Accept"}</button>
                                 </fieldset>
                             </form>
                         </div>

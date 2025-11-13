@@ -38,7 +38,8 @@ const router = createBrowserRouter([
       },
       {
         path: "myacceptedtasks",
-        element: <MyAcceptedTasks></MyAcceptedTasks>
+        element: <MyAcceptedTasks></MyAcceptedTasks>,
+        loader: () => fetch('http://localhost:3000/jobs')
       },
       {
         path: "register",

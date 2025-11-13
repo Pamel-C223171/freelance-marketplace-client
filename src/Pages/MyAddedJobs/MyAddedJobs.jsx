@@ -88,7 +88,7 @@ const MyAddedJobs = () => {
                 // console.log('after added job', data);
                 if (data.modifiedCount > 0) {
                     toast.success('Update to the job Successful!', {
-                        position: "top-center",
+                        position: "top-right",
                         autoClose: 2000,
                         hideProgressBar: false,
                         closeOnClick: true,
@@ -101,7 +101,7 @@ const MyAddedJobs = () => {
                 }
                 else {
                     toast.success('No changes!', {
-                        position: "top-center",
+                        position: "top-right",
                         autoClose: 2000,
                         hideProgressBar: false,
                         closeOnClick: true,
@@ -236,7 +236,7 @@ const MyAddedJobs = () => {
                         </table>
 
                         <ToastContainer
-                            position="bottom-center"
+                            position="bottom-right"
                             autoClose={2000}
                             hideProgressBar={false}
                             newestOnTop={false}
