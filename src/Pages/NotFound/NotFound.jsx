@@ -8,7 +8,7 @@ const NotFound = () => {
     return (
        <div>
         <Navbar></Navbar>
-             <div className='flex flex-col items-center mx-auto text-center my-14'>
+             <div className='flex flex-col items-center mx-auto bg-[#a868a8] text-center py-14'>
             <img className='mx-auto h-[200px]' src={errorimg} alt="" />
             <div>
                 <h2 className='text-3xl font-bold'>Oops, page not found!</h2>

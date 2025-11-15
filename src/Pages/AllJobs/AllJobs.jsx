@@ -19,7 +19,7 @@ const AllJobs = () => {
     } 
 
     return (
-        <div className='my-14'>
+        <div className='py-14 bg-[#a868a8]'>
 
             {/* latest Jobs */}
             <div className='w-11/12 mx-auto'>
@@ -27,7 +27,7 @@ const AllJobs = () => {
                <div className='mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                                    {
                                        jobs.map(job =>
-                                           <div className="card bg-white shadow-sm p-3 hover:scale-105 transition ease-in-out">
+                                           <div className="card bg-[#802680] shadow-sm p-3 hover:scale-105 transition ease-in-out flex flex-col justify-between h-full">
                                                <figure className='h-48 overflow-hidden rounded-2xl'>
                                                    <img className='w-full object-cover'
                                                        src={job.coverImage}
@@ -37,24 +37,17 @@ const AllJobs = () => {
                                                <div className='mt-3'>
                                                    <div className='flex justify-between items-center'>
                                                        <p className='font-bold'>{job.title}</p>
-                                                       <div className="badge bg-base-300 px-2 py-5">
+                                                       <div className="badge bg-[#9c509c] border-none px-2 py-4">
                                                            <p className='text-xs text-center'>{job.category}</p></div>
                                                    </div>
                                                    <div className="card-actions justify-start items-center mt-3">
                
-                                                       {/* <div className=" text-black  "><img className="rounded-full  h-[25px] w-[25px]"
-                                                           alt="User Image"
-                                                           src={`${user?.photoURL || "https://th.bing.com/th/id/R.2fa57439a24f242faaf2333fe5e9e295?rik=ERIOJB6KU7TNYw&pid=ImgRaw&r=0"}`} /></div> */}
+                                                      
 
                                                        <div className="font-semibold">🙎‍♂️ {job.postedBy}</div>
                
                                                    </div>
-                                                   {/* <div className="card-actions justify-between mt-4">
-                                                       
-                                                   <div className="badge text-black bg-[#F1F5E8] "><img className="w-[15px] h-[15px]" src={priceimg} alt="" />{app.price}</div>
-                                                       <div className="badge text-[#00D390] bg-[#F1F5E8]">{job.status}</div>
-               
-                                                   </div> */}
+                                               
                                                     <button onClick={() => handleDetailsBtn(job._id)} className='btn btn-primary hover:bg-black w-full mt-4'>View Details</button>
                                                </div>
                                            </div>
@@ -62,9 +55,7 @@ const AllJobs = () => {
                                        )
                                    }
                                </div>
-                {/* <div className=' mt-10 flex justify-center'>
-                    <NavLink to='/alljobs'><button className='btn btn-primary'>View All Jobs</button></NavLink>
-                </div> */}
+                
             </div>
 
         </div>

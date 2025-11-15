@@ -73,10 +73,10 @@ const AddJob = () => {
     }
 
     return (
-        <div>
-            <div className="bg-base-200 min-h-screen flex items-center justify-center my-14">
+        <div className='bg-[#a868a8]'>
+            <div className="min-h-screen  flex items-center justify-center py-14">
 
-                <div className="card bg-base-100 w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
+                <div className="card bg-[#802680] w-11/12 md:w-full max-w-xl shadow-2xl p-10">
                     <h1 className="text-4xl font-bold text-center mb-6">Added To The Job</h1>
                     <div className="">
                         <form onSubmit={handleAddJob}>
@@ -109,7 +109,7 @@ const AddJob = () => {
 
                                 <div className='w-full mx-auto'>
                                     <label className="label mb-2">Summary</label>
-                                    <textarea name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
+                                    <textarea name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 bg-white rounded-xl resize-none' required></textarea>
                                 </div>
 
                                 <button type="submit" onClick={handleAddBtn} className="btn btn-primary hover:bg-black w-full mt-4">Add </button>

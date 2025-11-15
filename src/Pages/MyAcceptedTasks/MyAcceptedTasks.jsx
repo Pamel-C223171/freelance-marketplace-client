@@ -64,14 +64,15 @@ const MyAcceptedTasks = () => {
     }
 
     return (
-        <div className='my-14 w-11/12 mx-auto'>
+       <div className='bg-[#a868a8]'>
+         <div className='py-14 w-11/12 mx-auto '>
             <h2 className='text-4xl font-bold text-center'>My Accepted Jobs</h2>
             {
                 myJobs.length > 0 ? (
-                    <div className='mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+                    <div className='mt-8  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                         {
                             myAcceptJobs.map(job =>
-                                <div className="card bg-white shadow-sm p-3 hover:scale-105 transition ease-in-out">
+                                <div className="card bg-[#802680] shadow-sm p-3 hover:scale-105 transition ease-in-out">
                                     <figure className='h-48 overflow-hidden rounded-2xl'>
                                         <img className='w-full object-cover'
                                             src={job.coverImage}
@@ -80,16 +81,14 @@ const MyAcceptedTasks = () => {
 
                                     <div className='mt-3'>
                                         <div className='flex justify-between items-center'>
-                                            <p className='font-bold'>{job.title}</p>
-                                            <div className="badge bg-base-300 px-2 py-5">
-                                                <p className='text-xs text-center'>{job.category}</p></div>
+                                            <p className='font-bold text-white'>{job.title}</p>
+                                            <div className="badge bg-[#9c509c] border-none px-2 py-4 rounded-full">
+                                                <p className='text-xs text-center '>{job.category}</p></div>
                                         </div>
                                         <div className="card-actions justify-start items-center mt-3">
 
-                                            <div className=" text-black  "><img className="rounded-full  h-[25px] w-[25px]"
-                                                alt="User Image"
-                                                src={`${user?.photoURL || "https://th.bing.com/th/id/R.2fa57439a24f242faaf2333fe5e9e295?rik=ERIOJB6KU7TNYw&pid=ImgRaw&r=0"}`} /></div>
-                                            <div className="font-semibold">{job.postedBy}</div>
+                                            
+                                            <div className="font-semibold text-white">🙎‍♂️ {job.postedBy}</div>
 
                                         </div>
                                         <div className='flex items-center justify-between mt-5'>
@@ -124,6 +123,7 @@ const MyAcceptedTasks = () => {
                             transition={Bounce}
                         />
         </div>
+       </div>
     );
 };
 

@@ -114,7 +114,8 @@ const handleUpdateJob = async (e, id) => {
 
 
 return (
-    <div className='my-14 w-11/12 mx-auto'>
+    <div className='bg-[#a868a8]'>
+        <div className='py-14 w-11/12 mx-auto bg-[#a868a8]'>
         <h2 className='font-bold text-center text-3xl mb-8'>My Added Job</h2>
         <div>
             {myJobs.length > 0 ?
@@ -135,7 +136,7 @@ return (
                             myJobs.map((job, index) => <tbody className='text-center rounded-2xl'>
                                 {/* row 1 */}
 
-                                <tr className='bg-white shadow-2xl border-b-2 border-base-300'>
+                                <tr className='bg-[#802680] shadow-2xl border-b-2 border-base-300'>
                                     <th className='mx-auto text-2xl'>
                                         {index + 1}
                                     </th>
@@ -154,19 +155,19 @@ return (
                                     <td>
                                         <div>
                                             <div className="font-bold">{job.title}</div>
-                                            <div className="text-sm opacity-50">{job.category}</div>
+                                            <div className="text-sm opacity-90 ">{job.category}</div>
                                         </div>
                                     </td>
                                     <td><button className="btn btn-ghost btn-xs bg-green-500 mr-2">{job.status}</button></td>
                                     <th>
                                         {/* Open the modal using document.getElementById('ID').showModal() method */}
                                         <button className="btn btn-ghost btn-xs bg-blue-500 hover:bg- hover:text-white hover:bg-black mr-2" onClick={() => document.getElementById('my_modal_5').showModal()}>Update</button>
-                                        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                                            <div className="modal-box">
+                                        <dialog id="my_modal_5" className="modal modal-bottom  sm:modal-middle">
+                                            <div className="modal-box bg-[#a868a8]">
                                                 <div>
                                                     <div className="min-h-screen flex items-center justify-center">
 
-                                                        <div className="card bg-base-100 w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
+                                                        <div className="card bg-[#802680] w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
                                                             <h1 className="text-4xl font-bold text-center mb-6">Update To The Job</h1>
                                                             <div className="">
                                                                 <form onSubmit={(e) => handleUpdateJob(e, job._id)}>
@@ -196,7 +197,7 @@ return (
 
                                                                         <div className='w-full mx-auto'>
                                                                             <label className="label mb-2">Summary</label>
-                                                                            <textarea defaultValue={job.summary} name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
+                                                                            <textarea defaultValue={job.summary} name="summary" rows="5" className='w-full bg-white border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
                                                                         </div>
 
                                                                         <button type="submit" className="btn btn-primary hover:bg-black hover:text-white w-full mt-4">Update</button>
@@ -255,6 +256,7 @@ return (
                 )
             }
         </div>
+    </div>
     </div>
 );
 };
