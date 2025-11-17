@@ -148,7 +148,7 @@ return (
                             myJobs.map((job, index) => <tbody className='text-center rounded-2xl'>
                                 {/* row 1 */}
 
-                                <tr className=' shadow-2xl border-b-2 border-base-300'>
+                                <tr className=' shadow-2xl bg-base-300 border-b-2 border-base-100'>
                                     <th className='mx-auto text-2xl'>
                                         {index + 1}
                                     </th>
@@ -179,7 +179,7 @@ return (
                                                 <div>
                                                     <div className="min-h-screen flex items-center justify-center">
 
-                                                        <div className="card  w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
+                                                        <div className="card bg-base-300  w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
                                                             <h1 className="text-4xl font-bold text-center mb-6">Update To The Job</h1>
                                                             <div className="">
                                                                 <form onSubmit={(e) => handleUpdateJob(e, job._id)}>

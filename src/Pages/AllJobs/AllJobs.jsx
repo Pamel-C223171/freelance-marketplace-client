@@ -29,7 +29,7 @@ const AllJobs = () => {
                <div className='mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                                    {
                                        jobs.map(job =>
-                                           <div className="card bg-base-100 border-4 border-black shadow-2xl p-3 hover:scale-105 transition ease-in-out flex flex-col justify-between h-full">
+                                           <div className="card bg-base-300 shadow-2xl p-3 hover:scale-105 transition ease-in-out flex flex-col justify-between h-full">
                                                <figure className='h-48 overflow-hidden rounded-2xl'>
                                                    <img className='w-full object-cover'
                                                        src={job.coverImage}

@@ -4,6 +4,8 @@ import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import axios  from 'axios';
+import doneimg from '../../assets/done.png'
+import cancelimg from '../../assets/cancel.png'
 
 const MyAcceptedTasks = () => {
     const jobs = useLoaderData();
@@ -87,7 +89,7 @@ const MyAcceptedTasks = () => {
                     <div className='mt-8  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                         {
                             myAcceptJobs.map(job =>
-                                <div key={job._id} className="card bg-base-100 border-4 border-black shadow-2xl p-3 hover:scale-105 transition ease-in-out">
+                                <div key={job._id} className="card bg-base-300  shadow-2xl p-3 hover:scale-105 transition ease-in-out">
                                     <figure className='h-48 overflow-hidden rounded-2xl'>
                                         <img className='w-full object-cover'
                                             src={job.coverImage}
@@ -107,8 +109,8 @@ const MyAcceptedTasks = () => {
 
                                         </div>
                                         <div className='flex items-center justify-between mt-5'>
-                                            <button onClick={() => handleDelete(job._id, 'done')} className='btn btn-primary hover:bg-black'>✅ Done</button>
-                                            <button onClick={() => handleDelete(job._id, 'cancel')} className='btn btn-primary hover:bg-black'>❌ Cancel</button>
+                                            <button onClick={() => handleDelete(job._id, 'done')} className='btn btn-primary hover:bg-black'><img className='w-[30px] h-[30px]' src={doneimg} alt="" />Done</button>
+                                            <button onClick={() => handleDelete(job._id, 'cancel')} className='btn btn-primary hover:bg-black'><img className='w-[30px] h-[30px]' src={cancelimg} alt="" />Cancel</button>
                                         </div>
 
                                     </div>
