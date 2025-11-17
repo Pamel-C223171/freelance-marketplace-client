@@ -1,5 +1,5 @@
 import React, { use } from 'react';
-import { NavLink, useLoaderData, useNavigate } from 'react-router-dom';
+import {  useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 
 const AllJobs = () => {
@@ -18,8 +18,10 @@ const AllJobs = () => {
     }
     } 
 
+     
+
     return (
-        <div className='py-14 bg-[#a868a8]'>
+        <div className='py-14 bg-base-100'>
 
             {/* latest Jobs */}
             <div className='w-11/12 mx-auto'>
@@ -27,17 +29,17 @@ const AllJobs = () => {
                <div className='mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                                    {
                                        jobs.map(job =>
-                                           <div className="card bg-[#802680] shadow-sm p-3 hover:scale-105 transition ease-in-out flex flex-col justify-between h-full">
+                                           <div className="card bg-base-100 border-4 border-black shadow-2xl p-3 hover:scale-105 transition ease-in-out flex flex-col justify-between h-full">
                                                <figure className='h-48 overflow-hidden rounded-2xl'>
                                                    <img className='w-full object-cover'
                                                        src={job.coverImage}
-                                                       alt="Shoes" />
+                                                       alt={job.title} />
                                                </figure>
                
                                                <div className='mt-3'>
                                                    <div className='flex justify-between items-center'>
                                                        <p className='font-bold'>{job.title}</p>
-                                                       <div className="badge bg-[#9c509c] border-none px-2 py-4">
+                                                       <div className="badge border-2 border-black px-2 py-4">
                                                            <p className='text-xs text-center'>{job.category}</p></div>
                                                    </div>
                                                    <div className="card-actions justify-start items-center mt-3">

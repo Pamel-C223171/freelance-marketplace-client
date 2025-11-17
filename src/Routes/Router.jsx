@@ -16,6 +16,7 @@ import JobsDetails from '../Pages/JobsDetails/JobsDetails.jsx';
 import MyAddedJobs from '../Pages/MyAddedJobs/MyAddedJobs.jsx';
 import NotFound from '../Pages/NotFound/NotFound.jsx';
 import PrivateRoutes from '../Contexts/AuthProvider/PrivateRoutes.jsx';
+import  axios  from 'axios';
 
 const router = createBrowserRouter([
   {
@@ -25,12 +26,18 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
-        loader: () => fetch('http://localhost:3000/latest-jobs')
+        loader: async () => {
+          const res = await axios.get('http://localhost:3000/latest-jobs');
+          return res.data;
+        }
       },
       {
         path: "alljobs",
         Component: AllJobs,
-        loader: () => fetch('http://localhost:3000/jobs')
+        loader: async () => {
+          const res = await axios.get('http://localhost:3000/jobs');
+          return res.data;
+        }
       },
       {
         path: "addjob",
@@ -39,7 +46,10 @@ const router = createBrowserRouter([
       {
         path: "myacceptedtasks",
         element: <MyAcceptedTasks></MyAcceptedTasks>,
-        loader: () => fetch('http://localhost:3000/jobs')
+        loader: async () => {
+          const res = await axios.get('http://localhost:3000/jobs');
+          return res.data;
+        }
       },
       {
         path: "register",
@@ -52,12 +62,18 @@ const router = createBrowserRouter([
       {
         path: "myaddedjobs",
         element: <MyAddedJobs></MyAddedJobs>,
-        loader: () => fetch('http://localhost:3000/jobs')
+         loader: async () => {
+          const res = await axios.get('http://localhost:3000/jobs');
+          return res.data;
+        }
       },
       {
         path: "jobDetails/:id",
         element: <JobsDetails></JobsDetails>,
-        loader: ({params}) => fetch(`http://localhost:3000/jobs/${params.id}`)
+         loader: async ({params}) => {
+          const res = await axios.get(`http://localhost:3000/jobs/${params.id}`);
+          return res.data;
+        }
       },
     ]
   },

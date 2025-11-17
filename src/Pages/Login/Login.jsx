@@ -89,9 +89,9 @@ const Login = () => {
    
     return (
         <div>
-            <div className="hero bg-[#a868a8] min-h-screen">
+            <div className="hero bg-base-100 min-h-screen">
                 <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="card bg-[#802680] w-full max-w-sm shrink-0 shadow-2xl p-10">
+                    <div className="card w-full max-w-sm shrink-0 shadow-2xl p-10">
                         <h1 className="text-5xl font-bold">Login now!</h1>
                         <div className="card-body">
                             <form onSubmit={handleLogin}>
@@ -110,7 +110,7 @@ const Login = () => {
                                     <button className="btn btn-primary hover:bg-black mt-4">Login</button>
                                     <p className="font-semibold text-center pt-5">
                                         Dont’t Have An Account ?{" "}
-                                        <Link className="text-secondary" to="/register">
+                                        <Link className="text-red-600" to="/register">
                                             Register
                                         </Link>
                                     </p>

@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import { Link } from 'react-router-dom';
@@ -7,23 +7,24 @@ import axios  from 'axios';
 const AddJob = () => {
 
     const { user } = use(AuthContext);
+    const [loading, setLoading] = useState(false);
 
 
-    const handleAddBtn = () => {
+    // const handleAddBtn = () => {
 
-        toast.success('Add to the job Successful!', {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-        });
+    //     toast.success('Add to the job Successful!', {
+    //         position: "top-center",
+    //         autoClose: 2000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "light",
+    //         transition: Bounce,
+    //     });
 
-    }
+    // }
 
     const handleAddJob = async (e) => {
         e.preventDefault();
@@ -50,6 +51,7 @@ const AddJob = () => {
         }
 
         try{
+            setLoading(true);
              await axios.post('http://localhost:3000/jobs', newJob);
              toast.success('Add to the job Successful!', {
             position: "top-center",
@@ -62,21 +64,28 @@ const AddJob = () => {
             theme: "light",
             transition: Bounce,
         });
+        setLoading(false);
         
         form.reset();
 
         }
         catch(error){
             console.log(error);
+            setLoading(false);
         }
 
     }
 
+     if(loading){
+        return <div className='min-h-screen flex justify-center'><span className="loading loading-spinner loading-xl">Loading...</span></div>
+    }
+
+
     return (
-        <div className='bg-[#a868a8]'>
+        <div className='bg-base-100'>
             <div className="min-h-screen  flex items-center justify-center py-14">
 
-                <div className="card bg-[#802680] w-11/12 md:w-full max-w-xl shadow-2xl p-10">
+                <div className="card bg-base-100 w-11/12 md:w-full max-w-xl shadow-2xl p-10">
                     <h1 className="text-4xl font-bold text-center mb-6">Added To The Job</h1>
                     <div className="">
                         <form onSubmit={handleAddJob}>
@@ -89,7 +98,7 @@ const AddJob = () => {
                                 <input name='name' defaultValue={user.displayName} type="text" className="input input-bordered w-full" />
 
                                 <label className="label">Category</label>
-                                <select name='category' defaultValue="Pick a color" className="select appearance-none w-full">
+                                <select name='category' defaultValue="Select Job Category" className="select appearance-none w-full" required>
                                     <option disabled={true}>Select Job Category</option>
                                     <option>Web Development</option>
                                     <option>Mobile App Development</option>
@@ -104,15 +113,15 @@ const AddJob = () => {
                                 <label className="label">Email</label>
                                 <input name='email' defaultValue={user.email} readOnly type="email" className="input input-bordered w-full" />
 
-                                <label className="label">Posted Date</label>
-                                <input name='date' type='text' defaultValue={new Date().toISOString()} className="input input-bordered w-full"  required />
+                                <label className="label hidden">Posted Date</label>
+                                <input name='date' type='text' value={new Date().toISOString()} className="input input-bordered w-full hidden"  readOnly />
 
                                 <div className='w-full mx-auto'>
                                     <label className="label mb-2">Summary</label>
-                                    <textarea name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 bg-white rounded-xl resize-none' required></textarea>
+                                    <textarea name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
                                 </div>
 
-                                <button type="submit" onClick={handleAddBtn} className="btn btn-primary hover:bg-black w-full mt-4">Add </button>
+                                <button type="submit"  className="btn btn-primary hover:bg-black w-full mt-4">Add </button>
 
                             </fieldset>
                         </form>

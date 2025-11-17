@@ -107,9 +107,9 @@ const Register = () => {
 
     return (
         <div>
-            <div className="bg-[#a868a8] min-h-screen flex items-center justify-center py-10">
+            <div className="bg-base-100 min-h-screen flex items-center justify-center py-10">
 
-                <div className="card bg-[#802680] w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
+                <div className="card w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
                     <h1 className="text-4xl font-bold text-center mb-6">Register now!</h1>
                     <div className="">
                         <form onSubmit={handleRegister}>
@@ -137,7 +137,7 @@ const Register = () => {
                                 <button type="submit" className="btn btn-primary hover:bg-black w-full mt-4">Register</button>
                                 <p className="font-semibold text-center pt-5">
                                     Already Have An Account ?{" "}
-                                    <Link className="text-secondary" to="/login">
+                                    <Link className="text-red-600" to="/login">
                                         LogIn
                                     </Link>
                                 </p>

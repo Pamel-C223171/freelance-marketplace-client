@@ -1,5 +1,5 @@
-import React, { use, useState } from 'react';
-import { NavLink, useLoaderData } from 'react-router-dom';
+import React, { use, useEffect, useState } from 'react';
+import { NavLink, useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
@@ -9,9 +9,17 @@ const MyAcceptedTasks = () => {
     const jobs = useLoaderData();
     // console.log(jobs);
     const { user } = use(AuthContext);
+    const [loading, setLoading] =  useState(false);
     const myJobs = jobs.filter(job => job.acceptedBy === user?.email);
     console.log(myJobs);
     const [myAcceptJobs, setMyAcceptJobs] = useState(myJobs);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!user){
+            navigate('/login');
+        }
+    }, [user]);
 
     const handleDelete = async (id, type) => {
         const confirm = await Swal.fire({
@@ -25,11 +33,12 @@ const MyAcceptedTasks = () => {
 
         if (confirm.isConfirmed) {
             try {
+                setLoading(true);
                 const res = await axios.delete(`http://localhost:3000/jobs/${id}`);
 
                 if (res.data.deletedCount) {
                     setMyAcceptJobs(prev => prev.filter(job => job._id !== id));
-                    toast.success(type === 'done' ? 'mark as done?' : 'cancel this job?', {
+                    toast.success(type === 'done' ? 'Job mark as done?' : 'Job cancelled!', {
                         position: "top-center",
                         autoClose: 2000,
                         hideProgressBar: false,
@@ -40,6 +49,7 @@ const MyAcceptedTasks = () => {
                         theme: "light",
                         transition: Bounce,
                     });
+                    setLoading(false);
 
                 }
 
@@ -57,22 +67,27 @@ const MyAcceptedTasks = () => {
                         theme: "light",
                         transition: Bounce,
                     });
+                    setLoading(false);
             }
         
         }
 
     }
 
+     if(loading){
+        return <div className='min-h-screen flex justify-center'><span className="loading loading-spinner loading-xl"></span></div>
+    }
+
     return (
-       <div className='bg-[#a868a8]'>
+       <div className='bg-base-100 pb-14'>
          <div className='py-14 w-11/12 mx-auto '>
             <h2 className='text-4xl font-bold text-center'>My Accepted Jobs</h2>
             {
-                myJobs.length > 0 ? (
+                myAcceptJobs.length > 0 ? (
                     <div className='mt-8  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                         {
                             myAcceptJobs.map(job =>
-                                <div className="card bg-[#802680] shadow-sm p-3 hover:scale-105 transition ease-in-out">
+                                <div key={job._id} className="card bg-base-100 border-4 border-black shadow-2xl p-3 hover:scale-105 transition ease-in-out">
                                     <figure className='h-48 overflow-hidden rounded-2xl'>
                                         <img className='w-full object-cover'
                                             src={job.coverImage}
@@ -81,14 +96,14 @@ const MyAcceptedTasks = () => {
 
                                     <div className='mt-3'>
                                         <div className='flex justify-between items-center'>
-                                            <p className='font-bold text-white'>{job.title}</p>
-                                            <div className="badge bg-[#9c509c] border-none px-2 py-4 rounded-full">
+                                            <p className='font-bold '>{job.title}</p>
+                                            <div className="badge border-2 border-black px-2 py-4 rounded-full">
                                                 <p className='text-xs text-center '>{job.category}</p></div>
                                         </div>
                                         <div className="card-actions justify-start items-center mt-3">
 
                                             
-                                            <div className="font-semibold text-white">🙎‍♂️ {job.postedBy}</div>
+                                            <div className="font-semibold ">🙎‍♂️ {job.postedBy}</div>
 
                                         </div>
                                         <div className='flex items-center justify-between mt-5'>

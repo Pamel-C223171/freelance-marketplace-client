@@ -7,6 +7,7 @@ import  axios  from 'axios';
 const JobsDetails = () => {
     const job = useLoaderData();
     const { user } = use(AuthContext);
+    const [loading, setLoading] = useState(false);
     // const { id } = useParams();
     // const jobs = data.find(job => String(jobDetails._id) === id)
 
@@ -24,6 +25,7 @@ const JobsDetails = () => {
                 status: "Accepted"
             };
 
+            setLoading(true);
             const res = await axios.patch(`http://localhost:3000/jobs/${jobDetails._id}`, updateJob)
 
             if (res.status === 200) {
@@ -39,6 +41,7 @@ const JobsDetails = () => {
                     transition: Bounce,
                 });
 
+                // setLoading(false);
                 setJobDetails(prev => ({
                     ...prev,
                     acceptedBy: user.email,
@@ -53,17 +56,22 @@ const JobsDetails = () => {
             console.log(error);
             toast.error("something went wrong!")
         }
+        finally{
+            setLoading(false);
+        }
 
     }
 
     const isDisabled = jobDetails.status === "Accepted" || jobDetails.acceptedBy || jobDetails.userEmail === user.email;
 
+
     return (
-        <div className='w-11/12 md:w-2/3 py-14  mx-auto '>
+       <div className='bg-base-100 '>
+         <div className='w-11/12 md:w-2/3 py-14 mx-auto '>
             <div className="grid grid-cols-12 gap-8 ">
                 <div className='col-span-12 md:col-span-8'>
                     <div className='border-b-2 border-gray-300'>
-                        <p className='text-xs mb-2'>{jobDetails.category}</p>
+                        <div className=''><p className='text-xs mb-2'>{jobDetails.category}</p></div>
                         <p className=" text-sm mb-3"><span className='text-3xl font-bold'>{jobDetails.title}</span></p>
                     </div>
                     <figure className=' overflow-hidden mt-5'>
@@ -84,7 +92,7 @@ const JobsDetails = () => {
 
                         </div>
                         <div className=''>
-                            <p className='text-base font-semibold'>Accepted By : <span className='font-normal'>{jobDetails.acceptedBy}</span></p>
+                            <p className='text-base font-semibold'>Accepted By : <span className='font-normal'>{jobDetails.acceptedBy || "Not Yet" }</span></p>
 
                         </div>
                         <div className=''>
@@ -93,11 +101,11 @@ const JobsDetails = () => {
                         <div className="">
                             <form onSubmit={handleAccept}>
                                 <fieldset className="fieldset">
-                                    <label className="label font-semibold text-black">Name</label>
+                                    <label className="label font-semibold ">Name</label>
                                     <input name='name' defaultValue={user.displayName} readOnly type="name" className="input" placeholder="Name" required />
-                                    <label className="label font-semibold text-black">Email</label>
+                                    <label className="label font-semibold ">Email</label>
                                     <input name='email' type="email" defaultValue={user.email} readOnly className="input" placeholder="Email" required />
-                                    <button disabled={isDisabled} className={`btn mt-5 ${isDisabled ? 'btn-disabled' : 'btn-primary hover:bg-black'}`}>{jobDetails.status === "Accepted" ? "Already Accepted" : "Accept"}</button>
+                                    <button disabled={isDisabled} className={`btn mt-5 ${isDisabled ? 'btn-disabled' : 'btn-primary hover:bg-black'}`}>{loading ? "Accepting..." : ( jobDetails.status === "Accepted" ? "Already Accepted" : "Accept")}</button>
                                 </fieldset>
                             </form>
                         </div>
@@ -126,6 +134,7 @@ const JobsDetails = () => {
                 transition={Bounce}
             />
         </div>
+       </div>
     );
 };
 

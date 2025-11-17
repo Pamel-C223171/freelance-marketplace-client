@@ -9,6 +9,7 @@ const MyAddedJobs = () => {
 
     const jobs = useLoaderData();
     const { user } = use(AuthContext);
+    const [loading, setLoading] = useState(false);
 
     const [myJobs, setMyJobs] = useState(jobs.filter(job => job.userEmail === user?.email));
 
@@ -26,7 +27,8 @@ const MyAddedJobs = () => {
                 if (result.isConfirmed) {
 
                     try {
-                        const res = axios.delete(`http://localhost:3000/jobs/${_id}`);
+                        setLoading(true);
+                        const res = await axios.delete(`http://localhost:3000/jobs/${_id}`);
 
 
                         // console.log('after delete job', data);
@@ -38,6 +40,7 @@ const MyAddedJobs = () => {
                             });
                             setMyJobs(prev => prev.filter(job => job._id !== _id));
                         }
+                        setLoading(false);
 
                     }
                     catch (error) {
@@ -68,6 +71,7 @@ const handleUpdateJob = async (e, id) => {
     }
 
     try{
+        setLoading(true);
         const res = await axios.patch(`http://localhost:3000/jobs/${id}`, updateJob);
         if(res.data.modifiedCount > 0){
             toast.success('Update to the job Successful!', {
@@ -81,6 +85,8 @@ const handleUpdateJob = async (e, id) => {
                     theme: "light",
                     transition: Bounce,
                 });
+
+                setLoading(false);
 
                 setMyJobs(prev => prev.map(job => {
                     if (job._id === id) {
@@ -107,15 +113,21 @@ const handleUpdateJob = async (e, id) => {
     }
     catch(error){
         console.log(error);
+        setLoading(false);
     }
 
 
 }
 
+ if(loading){
+        return <div className='min-h-screen flex justify-center'><span className="loading loading-spinner loading-xl">Loading...</span></div>
+    }
+
+
 
 return (
-    <div className='bg-[#a868a8]'>
-        <div className='py-14 w-11/12 mx-auto bg-[#a868a8]'>
+    <div className='bg-base-100 py-14'>
+        <div className='pb-14 w-11/12 mx-auto'>
         <h2 className='font-bold text-center text-3xl mb-8'>My Added Job</h2>
         <div>
             {myJobs.length > 0 ?
@@ -136,7 +148,7 @@ return (
                             myJobs.map((job, index) => <tbody className='text-center rounded-2xl'>
                                 {/* row 1 */}
 
-                                <tr className='bg-[#802680] shadow-2xl border-b-2 border-base-300'>
+                                <tr className=' shadow-2xl border-b-2 border-base-300'>
                                     <th className='mx-auto text-2xl'>
                                         {index + 1}
                                     </th>
@@ -146,7 +158,7 @@ return (
                                                 <div className="mask mask-squircle h-15 w-15">
                                                     <img
                                                         src={job.coverImage}
-                                                        alt="Avatar Tailwind CSS Component" />
+                                                        alt={job.title} />
                                                 </div>
                                             </div>
 
@@ -163,11 +175,11 @@ return (
                                         {/* Open the modal using document.getElementById('ID').showModal() method */}
                                         <button className="btn btn-ghost btn-xs bg-blue-500 hover:bg- hover:text-white hover:bg-black mr-2" onClick={() => document.getElementById('my_modal_5').showModal()}>Update</button>
                                         <dialog id="my_modal_5" className="modal modal-bottom  sm:modal-middle">
-                                            <div className="modal-box bg-[#a868a8]">
+                                            <div className="modal-box ">
                                                 <div>
                                                     <div className="min-h-screen flex items-center justify-center">
 
-                                                        <div className="card bg-[#802680] w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
+                                                        <div className="card  w-11/12 md:w-full max-w-xl  shadow-2xl p-10">
                                                             <h1 className="text-4xl font-bold text-center mb-6">Update To The Job</h1>
                                                             <div className="">
                                                                 <form onSubmit={(e) => handleUpdateJob(e, job._id)}>
@@ -188,7 +200,7 @@ return (
                                                                         </select>
 
                                                                         <label className="label">Cover Image</label>
-                                                                        <input name='photo' type="text" className="input input-bordered w-full" placeholder="Enter Job Image URL" required />
+                                                                        <input name='photo' type="text" className="input input-bordered w-full" placeholder="Enter Job Image URL" defaultValue={job.coverImage} required />
 
 
 
@@ -197,7 +209,7 @@ return (
 
                                                                         <div className='w-full mx-auto'>
                                                                             <label className="label mb-2">Summary</label>
-                                                                            <textarea defaultValue={job.summary} name="summary" rows="5" className='w-full bg-white border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
+                                                                            <textarea defaultValue={job.summary} name="summary" rows="5" className='w-full border-2 pl-3 border-base-300 rounded-xl resize-none' required></textarea>
                                                                         </div>
 
                                                                         <button type="submit" className="btn btn-primary hover:bg-black hover:text-white w-full mt-4">Update</button>

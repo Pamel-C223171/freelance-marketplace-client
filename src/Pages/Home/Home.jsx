@@ -9,8 +9,8 @@ gsap.registerPlugin(useGSAP);
 
 
 const Home = () => {
-    const data = useLoaderData();
-    const jobs = data;
+    const jobs = useLoaderData();
+    // const jobs = data;
     const categories = [...new Set(jobs.map(job => job.category))];
     // console.log(categories)
     const { user } = use(AuthContext);
@@ -23,7 +23,7 @@ const Home = () => {
         const t3 = gsap.timeline({repeat:Infinity, yoyo:true})
 
         t1.to('.animation', {duration:2, scale:0.3, color:'#d1b787'});
-        t2.to('.animationtop', {duration:4, scale:1.2, color:'#d1b787'});
+        t2.to('.animationtop', {duration:4, scale:1.2, color:'#000000'});
         t3.to('.animationbtn', {duration:2, scale:1.2});
     })
 
@@ -48,16 +48,16 @@ const Home = () => {
    
     // console.log(data);
     return (
-        <div className='py-14 bg-[#a868a8]'>
-            {/* banner section */}
-            <div className='relative bg-gradient-to-r from-[#5f0b5f] via-[#992699] to-[#5f0b5f] py-20'>
-                <div className='absolute  inset-0 bg-cover bg-center opacity-30' style={{backgroundImage: `url(${bannerimg})`}}>
+        <div className={`py-14 bg-base-100 `}>
+            {/* banner section bg-gradient-to-r from-[#5f0b5f] via-[#992699] to-[#5f0b5f] */}
+            <div className={`relative   py-20`}>
+                <div className='absolute  inset-0 bg-cover bg-center opacity-50' style={{backgroundImage: `url(${bannerimg})`}}>
                 </div>
 
                     <div ref={boxRef} className=' flex flex-col items-center '>
 
                         <h1 className="animation  text-[#363958] text-5xl text-center  font-bold text-black"><span className="animation text-[#ecb247] text-5xl bebas">Reliable Marketplace </span><br />for Local Jobs </h1>
-                        <p className="text-[#ffffff] text-center mt-3 "> Discover the perfect job or hire talented people easily. Join our
+                        <p className="text-center mt-3 "> Discover the perfect job or hire talented people easily. Join our
                             platform today!</p>
                         <button onClick={handleCreateJob} className="animationbtn mt-5 btn btn-primary hover:bg-black z-10">Create a Job</button>
                     </div>
@@ -71,23 +71,23 @@ const Home = () => {
                 <div className='mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                     {
                         jobs.map(job =>
-                            <div className="card bg-[#802680] shadow-sm p-3 hover:scale-105 transition ease-in-out flex flex-col justify-between h-full">
+                            <div className="card bg-base-100 border-4 border-black shadow-lg p-3 hover:scale-105 transition ease-in-out flex flex-col justify-between h-full">
                                 <figure className='h-48 overflow-hidden rounded-2xl'>
                                     <img className='w-full object-cover'
                                         src={job.coverImage}
-                                        alt="Shoes" />
+                                        alt={job.title} />
                                 </figure>
 
                                 <div className='mt-3'>
                                     <div className='flex justify-between items-center'>
-                                        <p className='font-bold text-white'>{job.title}</p>
-                                        <div className="badge rounded-full bg-[#9c509c]  py-4 border-none">
+                                        <p className='font-bold '>{job.title}</p>
+                                        <div className="badge border-2 border-black rounded-full py-4 ">
                                             <p className='text-xs text-center '>{job.category}</p></div>
                                     </div>
                                     <div className="card-actions justify-start items-center mt-3">
 
                                        
-                                        <div className="font-semibold text-white">🙎‍♂️ {job.postedBy}</div>
+                                        <div className="font-semibold ">🙎‍♂️ {job.postedBy}</div>
 
                                     </div>
                                   
@@ -104,13 +104,13 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className='w-11/12 mx-auto mt-14'>
+            <div className='w-11/12 mx-auto my-14'>
                 <h2 className='font-bold text-3xl'>Top Categories</h2>
                 <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mt-8 '>
                     {
                         categories.map((cat, index) => (
-                            <div key={index} className=' flex flex-col items-center p-4 bg-gradient-to-r from-[#5f0b5f] via-[#992699] to-[#5f0b5f] shadow-lg rounded-xl hover:scale-105 transition-transform'>
-                                <p className='animationtop font-semibold text-white text-center'>{cat}</p>
+                            <div key={index} className=' flex flex-col items-center border-4 border-black p-4 shadow-lg rounded-xl hover:scale-105 transition-transform'>
+                                <p className='animationtop font-semibold text-center'>{cat}</p>
                             </div>
                         ))
                     }
