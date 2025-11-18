@@ -4,10 +4,11 @@ A full-stack MERN + Firebase Authentication powered freelancing platform where u
 ---
 
 ## 🌐 Live Links  
-🔹 **Client:**   
-🔹 **Server:** 
-🔹 **GitHub Client:**  
-🔹 **GitHub Server:**  
+🔹 **Client:**   https://freelance-marketplace-da5e1.web.app
+🔹 **Server:**   https://freelance-marketplace-server-theta.vercel.app/
+🔹 **GitHub Client:**  https://github.com/Pamel-C223171/freelance-marketplace-client
+🔹 **GitHub Server:**  https://github.com/Pamel-C223171/freelance-marketplace-server
+
 
 ---
 
