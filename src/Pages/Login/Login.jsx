@@ -8,7 +8,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { signInUser, setUser, signInWithGoogle } = use(AuthContext);
     const location = useLocation();
-    console.log(location)
+    // console.log(location)
     const navigate = useNavigate();
 
     const handleGoogleSignIn = () => {

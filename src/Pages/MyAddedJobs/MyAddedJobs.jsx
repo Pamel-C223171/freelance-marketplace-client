@@ -28,7 +28,7 @@ const MyAddedJobs = () => {
 
                     try {
                         setLoading(true);
-                        const res = await axios.delete(`http://localhost:3000/jobs/${_id}`);
+                        const res = await axios.delete(`https://freelance-marketplace-server-theta.vercel.app/jobs/${_id}`);
 
 
                         // console.log('after delete job', data);
@@ -72,7 +72,7 @@ const handleUpdateJob = async (e, id) => {
 
     try{
         setLoading(true);
-        const res = await axios.patch(`http://localhost:3000/jobs/${id}`, updateJob);
+        const res = await axios.patch(`https://freelance-marketplace-server-theta.vercel.app/jobs/${id}`, updateJob);
         if(res.data.modifiedCount > 0){
             toast.success('Update to the job Successful!', {
                     position: "top-right",

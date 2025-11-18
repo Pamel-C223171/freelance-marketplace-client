@@ -13,7 +13,7 @@ const MyAcceptedTasks = () => {
     const { user } = use(AuthContext);
     const [loading, setLoading] =  useState(false);
     const myJobs = jobs.filter(job => job.acceptedBy === user?.email);
-    console.log(myJobs);
+    // console.log(myJobs);
     const [myAcceptJobs, setMyAcceptJobs] = useState(myJobs);
     const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const MyAcceptedTasks = () => {
         if (confirm.isConfirmed) {
             try {
                 setLoading(true);
-                const res = await axios.delete(`http://localhost:3000/jobs/${id}`);
+                const res = await axios.delete(`https://freelance-marketplace-server-theta.vercel.app/jobs/${id}`);
 
                 if (res.data.deletedCount) {
                     setMyAcceptJobs(prev => prev.filter(job => job._id !== id));

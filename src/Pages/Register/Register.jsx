@@ -24,10 +24,10 @@ const Register = () => {
                 PhotoURL: result.user.photoURL
             }
 
-            const existingUsers = await axios.get(`http://localhost:3000/users?email=${googleUser.email}`);
+            const existingUsers = await axios.get(`https://freelance-marketplace-server-theta.vercel.app/users?email=${googleUser.email}`);
 
             if (existingUsers.data.length === 0) {
-                await axios.post('http://localhost:3000/users', newUser)
+                await axios.post('https://freelance-marketplace-server-theta.vercel.app/users', newUser)
             }
 
             setUser(googleUser);
@@ -77,11 +77,11 @@ const Register = () => {
             const result = await createUser(email, password);
             const user = result.user;
 
-            const existingUsers = await axios.get(`http://localhost:3000/users?email=${email}`);
+            const existingUsers = await axios.get(`https://freelance-marketplace-server-theta.vercel.app/users?email=${email}`);
 
             if (existingUsers.data.length === 0) {
                 const newUser = { name, email, photoURL: photo };
-                await axios.post('http://localhost:3000/users', newUser);
+                await axios.post('https://freelance-marketplace-server-theta.vercel.app/users', newUser);
             }
             toast.success('Registration Successfull!', {
                 position: "top-center",

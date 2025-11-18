@@ -27,7 +27,8 @@ const router = createBrowserRouter([
         index: true,
         Component: Home,
         loader: async () => {
-          const res = await axios.get('http://localhost:3000/latest-jobs');
+          const res = await axios.get('https://freelance-marketplace-server-theta.vercel.app/latest-jobs');
+          // console.log(res.data);
           return res.data;
         }
       },
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         path: "alljobs",
         Component: AllJobs,
         loader: async () => {
-          const res = await axios.get('http://localhost:3000/jobs');
+          const res = await axios.get('https://freelance-marketplace-server-theta.vercel.app/jobs');
           return res.data;
         }
       },
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
         path: "myacceptedtasks",
         element: <MyAcceptedTasks></MyAcceptedTasks>,
         loader: async () => {
-          const res = await axios.get('http://localhost:3000/jobs');
+          const res = await axios.get('https://freelance-marketplace-server-theta.vercel.app/jobs');
           return res.data;
         }
       },
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
         path: "myaddedjobs",
         element: <MyAddedJobs></MyAddedJobs>,
          loader: async () => {
-          const res = await axios.get('http://localhost:3000/jobs');
+          const res = await axios.get('https://freelance-marketplace-server-theta.vercel.app/jobs');
           return res.data;
         }
       },
@@ -71,7 +72,7 @@ const router = createBrowserRouter([
         path: "jobDetails/:id",
         element: <JobsDetails></JobsDetails>,
          loader: async ({params}) => {
-          const res = await axios.get(`http://localhost:3000/jobs/${params.id}`);
+          const res = await axios.get(`https://freelance-marketplace-server-theta.vercel.app/jobs/${params.id}`);
           return res.data;
         }
       },

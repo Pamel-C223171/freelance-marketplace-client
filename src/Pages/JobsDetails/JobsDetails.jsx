@@ -26,7 +26,7 @@ const JobsDetails = () => {
             };
 
             setLoading(true);
-            const res = await axios.patch(`http://localhost:3000/jobs/${jobDetails._id}`, updateJob)
+            const res = await axios.patch(`https://freelance-marketplace-server-theta.vercel.app/jobs/${jobDetails._id}`, updateJob)
 
             if (res.status === 200) {
                 toast.success('Accepted!', {

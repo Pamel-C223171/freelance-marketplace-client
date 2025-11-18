@@ -36,7 +36,7 @@ const AddJob = () => {
         const email = form.email.value;
         const date = form.date.value;
         const summary = form.summary.value;
-        console.log({ title, name, category, photo, email, date, summary });
+        // console.log({ title, name, category, photo, email, date, summary });
 
         const newJob = {
             title: title,
@@ -52,7 +52,7 @@ const AddJob = () => {
 
         try{
             setLoading(true);
-             await axios.post('http://localhost:3000/jobs', newJob);
+             await axios.post('https://freelance-marketplace-server-theta.vercel.app/jobs', newJob);
              toast.success('Add to the job Successful!', {
             position: "top-center",
             autoClose: 2000,
